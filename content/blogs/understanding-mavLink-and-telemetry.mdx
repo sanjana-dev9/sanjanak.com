@@ -1,0 +1,68 @@
+---
+title: Understanding MAVLink and Telemetry in Drones
+description:
+date: 2025-03-19
+author: Sanjana
+image: /images/mavlink-communication.png
+---
+
+### What is Telemetry?
+
+Telemetry is the process of **collecting, transmitting, processing, and analyzing data** from a system remotely. It is a technology-agnostic concept, meaning it is not limited to a specific communication protocol or technology. In drone communication, telemetry refers to the **exchange of data between the drone and the ground station**, regardless of the medium used (e.g., serial communication, radio links, or even IP-based networks like Wi-Fi).
+
+### Why is it Called “Telemetry” and Not the Protocol Used?
+
+Telemetry is a **functionality** rather than a specific hardware interface or communication protocol. For example, telemetry can be transmitted over different links such as **Radio 1, Radio 2, Serial1, Serial2, USB, or even TCP/IP connections**. While MAVLink is commonly used as the protocol for telemetry data in drones, telemetry itself refers to the broader concept of data transmission rather than the specific means or channel through which it is sent.
+
+### Components of a Drone
+
+A drone consists of multiple components that work together to ensure smooth operation:
+
+-   **Flight Controller:** The “brain” of the drone. A popular example is **Pixhawk**, which manages navigation, stability, and mission execution.
+-   **Air Unit:** This is the **transmitter and receiver** in the drone, handling communication with the ground station. For example, the **Herelink Air Unit** is connected to Pixhawk via **Telemetry 1**.
+-   **Remote Controller:** A device paired with the air unit that allows a pilot to control the drone and give mission commands.
+-   **Ground Control Station (GCS):**
+
+1.  **QGroundControl:** Used for changing parameters like setting the telemetry protocol used, setting firmware, and mission planning.
+2.  **Mission Planner:** Another popular GCS software for controlling the drone, managing telemetry, and monitoring flights.
+
+-   **Firmware (Flight Stack):** The software that runs on the flight controller, such as **ArduPilot** or **PX4**, responsible for handling flight dynamics and executing commands.
+
+### MAVLink: The Communication Protocol
+
+**MAVLink (Micro Air Vehicle Link)** is a lightweight, message-based protocol used for communication between drone components, such as the flight controller, air unit, companion computers, and ground stations. It standardizes messages across different systems, ensuring interoperability.
+
+### MAVLink 1.0 vs. MAVLink 2.0
+
+Feature MAVLink 1.0 MAVLink 2.0 Max Message Size 263 bytes 280 bytes Compatibility Older standard Backward compatible with MAVLink 1.0 Additional Fields Not supported Supports new fields without breaking older messages Message Signing Not supported Supported (for security) Message ID Limit Up to 255 Over 255
+
+MAVLink messages are exchanged over **serial communication**, meaning they can work over different transmission technologies such as **Wi-Fi, 900MHz radio, or telemetry radios**.
+
+### MAVLink Message Structure
+
+A MAVLink message consists of multiple fields:
+
+Byte Index Content Description
+
+![message frame](/images/mavlink-message-frame.png)
+
+### MAVLink Communication Flow
+
+Once a connection is established, the following communication pattern occurs:
+
+1.  How MAVLink is Used in Drone Systems
+
+    ![communication flow](/images/mavlink-communication.png)
+
+MAVLink plays a crucial role in drone telemetry and control. Here’s how it is used in various drone systems:
+
+1.  **Flight Controllers (Pixhawk, Cube, etc.)** communicate with ground control stations using MAVLink over telemetry radios.
+2.  **Companion Computers (Jetson, Raspberry Pi, etc.)** use MAVLink to send high-level commands and process additional onboard data.
+3.  **Ground Control Stations (Mission Planner, QGroundControl)** use MAVLink to monitor drone status and issue flight commands.
+4.  **Payload Systems (Cameras, Gimbals, etc.)** interact with MAVLink-enabled flight controllers to adjust settings dynamically.
+
+### Conclusion
+
+MAVLink is the **standardized messaging protocol** that enables seamless communication between drones and ground control stations. By understanding telemetry, message structure, and communication flow, developers and drone operators can effectively manage and monitor drones in real-time.
+
+Whether you are controlling a **Pixhawk-based drone**, integrating a **companion computer**, or designing a **custom ground station**, MAVLink ensures that all components speak a common language, making drone communication reliable and efficient. 🚁💡
